@@ -56,18 +56,26 @@ for (let i = 0; i < currentWord.length; i++) {
 document.onkeyup = function (event) {
     let userInput = event.key;
 
-    // if userInput does not exist within the current word, it will be added to empty array displayed in letter guessed section and guesses remaining decreases by 1
+    // if userInput does not exist within the current word
     if (currentWord.indexOf(userInput) === -1) {
-        letters.push(userInput);
-        guessedLetters.textContent = letters.join(" ");
-        remainingGuesses.textContent = parseInt(remainingGuesses.textContent) - 1;
+
+        // ...and it has not already been guessed, it will be added to empty array displayed in letter guessed section and guesses remaining decreases by 1
+        if (letters.indexOf(userInput) === -1) {
+
+            letters.push(userInput);
+            guessedLetters.textContent = letters.join(" ");
+            remainingGuesses.textContent = parseInt(remainingGuesses.textContent) - 1;
+
+            // if it has already been guessed, an alert will ask the user to try another
+        } else {
+            alert("You have already guessed that letter. Please try another.");
+        };
 
     } else {
         // if userInput exists within word chosen, then it will replace the "_" at the corresponding index
         placeholderWord.splice(currentWord.indexOf(userInput), 1, userInput);
         guessedWord.textContent = placeholderWord.join("");
         console.log(currentWord.indexOf(userInput));
-
     }
 
     // if userInput already exists within letters guessed, alert will ask for different input
