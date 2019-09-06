@@ -1,25 +1,26 @@
+// VARIABLES
 // array of words for computer to use
 let words = [
-    "antelope", "albatross", "alligator", "armadillo", "badger", 
-    "bear", "beaver", "beetle", "bovine", "buffalo", "bushbuck", "butterfly", 
-    "capybara", "caribou", "chickadee", "coatimundi", "cormorant", "cougar", "crab", 
+    "antelope", "albatross", "alligator", "armadillo", "badger",
+    "bear", "beaver", "beetle", "bovine", "buffalo", "bushbuck", "butterfly",
+    "capybara", "caribou", "chickadee", "coatimundi", "cormorant", "cougar", "crab",
     "dinosaur", "dingo", "dolphin", "donkey", "dragonfly", "duiker",
     "eagle", "elephant",
-    "flamingo", 
-    "gazelle", "giraffe", "goat", 
-    "hawk", "heron", "horse", "hummingbird", "hyena", 
-    "ibis", "iguana", 
+    "flamingo",
+    "gazelle", "giraffe", "goat",
+    "hawk", "heron", "horse", "hummingbird", "hyena",
+    "ibis", "iguana",
     "jaguar",
     "kangaroo", "kingfisher", "kitten", "kudu",
-    "lemming", "leopard", "lion", "lizard", "lynx", 
-    "magpie", "meerkat", "mockingbird", "mongoose", 
-    "otter", "orca", "oryx", "osprey", "ostrich", "oystercatcher", 
-    "pelican", "penguin", "puma", "peacock", "porcupine", "python", 
-    "quail", 
-    "raccoon", "rabbit", "rhinoceros", 
-    "skink", "squirrel", "sparrow", "spider", "starfish", "starling", "stilt", "stork", 
+    "lemming", "leopard", "lion", "lizard", "lynx",
+    "magpie", "meerkat", "mockingbird", "mongoose",
+    "otter", "orca", "oryx", "osprey", "ostrich", "oystercatcher",
+    "pelican", "penguin", "puma", "peacock", "porcupine", "python",
+    "quail",
+    "raccoon", "rabbit", "rhinoceros",
+    "skink", "squirrel", "sparrow", "spider", "starfish", "starling", "stilt", "stork",
     "tapir", "tarantula", "tern", "tortoise", "turkey",
-    "vulture", 
+    "vulture",
     "warthog", "whale", "woodpecker",
     "zebra"
 ];
@@ -28,35 +29,44 @@ let words = [
 let currentWord = words[Math.floor(Math.random() * words.length)].split("");
 console.log(currentWord);
 
-// emptyArray.length = word.length & for each index, value = "_"
 let guessedWord = document.getElementById("currentWord");
 let placeholderWord = [];
 
 let wins = document.getElementById("Wins");
-wins = 0;
+wins.textContent = 0;
 
- 
+let remainingGuesses = document.getElementById("remainingGuesses");
+remainingGuesses.textContent = 13;
+
+let guessedLetters = document.getElementById("guessedLetters");
+let letters = [];
 
 
+// FUNCTIONS
+
+// ACTIVE CODE
+// current word is displayed on the browser as a series of underscores
 for (let i = 0; i < currentWord.length; i++) {
     placeholderWord.push("_ ");
     console.log(placeholderWord);
     guessedWord.textContent = placeholderWord.join("");
 };
 
-// document.onkeyup stuff.  
-// event.key = userInput
-
+// user presses keys to choose letter to guess
 document.onkeyup = function (event) {
     let userInput = event.key;
 
-    // if userInput does not exist within word chosen, it will be added to empty array displayed in letter guessed section and guesses remaining decreases by 1
+    // if userInput does not exist within the current word, it will be added to empty array displayed in letter guessed section and guesses remaining decreases by 1
     if (currentWord.indexOf(userInput) === -1) {
-        console.log("this letter is NOT in the word")
+        letters.push(userInput);
+        guessedLetters.textContent = letters.join(" ");
+        remainingGuesses.textContent = parseInt(remainingGuesses.textContent) - 1;
 
     } else {
         // if userInput exists within word chosen, then it will replace the "_" at the corresponding index
-        console.log("this letter IS in the word")
+        placeholderWord.splice(currentWord.indexOf(userInput), 1, userInput);
+        guessedWord.textContent = placeholderWord.join("");
+        console.log(currentWord.indexOf(userInput));
 
     }
 
